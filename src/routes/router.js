@@ -1,6 +1,6 @@
 // routes/router.js
 const express = require('express');
-const productsRouter = require('./products');
+const productsRouter = require('./pizza');
 
 const router = express.Router();
 

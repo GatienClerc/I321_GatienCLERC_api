@@ -1,20 +1,20 @@
-// routes/products.js
+// routes/pizza.js
 const express = require('express');
 const { body, param } = require('express-validator');
-const productController = require('../controllers/productController');
+const productController = require('../controllers/pizzaController');
 
 const router = express.Router();
 
 /**
  * @openapi
- * /api/products:
+ * /api/pizzas:
  *   get:
- *     summary: Retrieve a list of products
+ *     summary: Retrieve a list of pizzas
  *     responses:
  *       200:
- *         description: A list of products
+ *         description: A list of pizzas
  *   post:
- *     summary: Create a new product
+ *     summary: Create a new pizza
  *     requestBody:
  *       required: true
  *       content:
@@ -23,11 +23,10 @@ const router = express.Router();
  *             type: object
  *             required:
  *               - name
+ *               - imageUrl
  *               - price
  *             properties:
  *               name:
- *                 type: string
- *               description:
  *                 type: string
  *               imageUrl:
  *                 type: string
@@ -42,7 +41,7 @@ const router = express.Router();
 
 /**
  * @openapi
- * /api/products/{id}:
+ * /api/pizzas/{id}:
  *   get:
  *     summary: Get a product by ID
  *     parameters:

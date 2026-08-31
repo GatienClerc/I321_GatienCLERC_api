@@ -15,15 +15,32 @@ const db = new sqlite3.Database(dbFile, (err) => {
 
 // Initialize products table if not exists
 const initSql = `
-CREATE TABLE IF NOT EXISTS products (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  name TEXT NOT NULL,
-  description TEXT,
-  imageUrl TEXT,
-  price REAL NOT NULL,
-  created_at TEXT DEFAULT (datetime('now')),
-  updated_at TEXT DEFAULT (datetime('now'))
-);
+    CREATE TABLE IF NOT EXISTS pizzas (
+                                          id INTEGER PRIMARY KEY AUTOINCREMENT,
+                                          name TEXT NOT NULL,
+                                          imageUrl TEXT,
+                                          price REAL NOT NULL,
+                                          created_at TEXT DEFAULT (datetime('now')),
+                                          updated_at TEXT DEFAULT (datetime('now'))
+    );
+
+    CREATE TABLE IF NOT EXISTS ingredients (
+                                               id INTEGER PRIMARY KEY AUTOINCREMENT,
+                                               name TEXT NOT NULL,
+                                               price REAL NOT NULL,
+                                               created_at TEXT DEFAULT (datetime('now')),
+                                               updated_at TEXT DEFAULT (datetime('now'))
+    );
+
+    CREATE TABLE IF NOT EXISTS pizzas_has_ingredients (
+                                                          id INTEGER PRIMARY KEY AUTOINCREMENT,
+                                                          pizza_id INTEGER,
+                                                          ingredient_id INTEGER,
+                                                          FOREIGN KEY(pizza_id) REFERENCES pizzas(id) ON DELETE CASCADE,
+                                                          FOREIGN KEY(ingredient_id) REFERENCES ingredients(id) ON DELETE CASCADE,
+                                                          created_at TEXT DEFAULT (datetime('now')),
+                                                          updated_at TEXT DEFAULT (datetime('now'))
+    );
 `;
 
 db.serialize(() => {
