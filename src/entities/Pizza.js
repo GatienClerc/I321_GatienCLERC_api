@@ -17,7 +17,12 @@ class Pizza {
     }
 
     static findAll() {
-        const sql = `SELECT * FROM pizzas ORDER BY id DESC`;
+        const sql = `SELECT p.id, p.name, GROUP_CONCAT(i.name, ', ') AS ingredients, p.imageUrl, p.price, p.created_at, p.updated_at
+            FROM pizzas p LEFT JOIN pizzas_has_ingredients phi ON p.id = phi.pizza_id LEFT JOIN ingredients i ON phi.ingredient_id = i.id
+            GROUP BY p.id
+            ORDER BY p.id DESC
+        `;
+
         return new Promise((resolve, reject) => {
             db.all(sql, [], (err, rows) => {
                 if (err) return reject(err);
@@ -27,7 +32,12 @@ class Pizza {
     }
 
     static findById(id) {
-        const sql = `SELECT * FROM pizzas WHERE id = ?`;
+        const sql = ` SELECT p.id, p.name, GROUP_CONCAT(i.name, ', ') AS ingredients, p.imageUrl, p.price, p.created_at, p.updated_at
+            FROM pizzas p LEFT JOIN pizzas_has_ingredients phi ON p.id = phi.pizza_id LEFT JOIN ingredients i ON phi.ingredient_id = i.id
+            WHERE p.id = ?
+            GROUP BY p.id
+        `;
+
         return new Promise((resolve, reject) => {
             db.get(sql, [id], (err, row) => {
                 if (err) return reject(err);
@@ -36,12 +46,11 @@ class Pizza {
         });
     }
 
-    static update(id, { name, description, imageUrl, price }) {
+    static update(id, { name, imageUrl, price }) {
         const initSql = `
             CREATE TABLE IF NOT EXISTS pizzas (
                                                   id INTEGER PRIMARY KEY AUTOINCREMENT,
                                                   name TEXT NOT NULL,
-                                
                                                   imageUrl TEXT,
                                                   price REAL NOT NULL,
                                                   created_at TEXT DEFAULT (datetime('now')),
