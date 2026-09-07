@@ -69,7 +69,9 @@ npm start
 
 ## Usage
 
-API base URL: http://localhost:3000/api
+API base URL: http://localhost:3000/api  
+API pizza URL: http://localhost:3000/api/pizzas  
+API ingredient URL: http://localhost:3000/api/ingredients
 
 Swagger UI docs: http://localhost:3000/docs
 
