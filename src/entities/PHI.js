@@ -1,9 +1,9 @@
-// entities/Pizza.js
+// entities/PHI.js
 const db = require('../config/database');
 
-class Pizza {
+class PHI {
     static findAll() {
-        const sql = `SELECT * FROM pizzas ORDER BY id DESC`;
+        const sql = `SELECT * FROM pizzas_has_ingredients phi ORDER BY id DESC`;
         return new Promise((resolve, reject) => {
             db.all(sql, [], (err, rows) => {
                 if (err) return reject(err);
@@ -13,7 +13,7 @@ class Pizza {
     }
 
     static findById(id) {
-        const sql = ` SELECT * FROM pizzas WHERE id = ? `;
+        const sql = ` SELECT * FROM pizzas_has_ingredients phi WHERE id = ? `;
 
         return new Promise((resolve, reject) => {
             db.get(sql, [id], (err, row) => {
@@ -22,7 +22,6 @@ class Pizza {
             });
         });
     }
-
 }
 
-module.exports = Pizza;
+module.exports = PHI;

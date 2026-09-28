@@ -1,0 +1,41 @@
+@startuml
+title Products API - Class Diagram
+
+class Pizza {
+  +int id
+  +string name
+  +string imageUrl
+  +float price
+  +string created_at
+  +string updated_at
+
+  +static create(obj) : Promise<Pizza>
+  +static findAll() : Promise<Pizza[]>
+  +static findById(id) : Promise<Pizza|null>
+  +static update(id, obj) : Promise<Pizza|null>
+  +static delete(id) : Promise<number>
+}
+
+class Ingredient {
+  +int id
+  +string name
+  +float price
+  +string created_at
+  +string updated_at
+
+  +static create(obj) : Promise<Ingredient>
+  +static findAll() : Promise<Ingredient[]>
+  +static findById(id) : Promise<Ingredient|null>
+  +static update(id, obj) : Promise<Ingredient|null>
+  +static delete(id) : Promise<number>
+}
+
+class Pizzas_has_Ingredients {
+  +int pizza_id
+  +int ingredient_id
+}
+
+Pizza "0" -- "0.*." Pizzas_has_Ingredients
+Ingredient "1" -- "0..*" Pizzas_has_Ingredients
+
+@enduml

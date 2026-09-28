@@ -1,38 +1,31 @@
 @startuml
-title Products API - Class Diagram
+title MLD - Pizzas et Ingrédients
 
-class Product {
-  +int id
-  +string name
-  +string description
-  +string imageUrl
-  +float price
-  +string created_at
-  +string updated_at
-  +static create(obj) : Promise<Product>
-  +static findAll() : Promise<Product[]>
-  +static findById(id) : Promise<Product|null>
-  +static update(id, obj) : Promise<Product|null>
-  +static delete(id) : Promise<number>
+entity PIZZA {
+    * id : INT <<PK>>
+    --
+    name : VARCHAR
+    imageUrl : VARCHAR
+    price : FLOAT
+    created_at : DATETIME
+    updated_at : DATETIME
 }
 
-class ProductController {
-  +create(req, res)
-  +findAll(req, res)
-  +findOne(req, res)
-  +update(req, res)
-  +delete(req, res)
+entity INGREDIENT {
+    * id : INT <<PK>>
+    --
+    name : VARCHAR
+    price : FLOAT
+    created_at : DATETIME
+    updated_at : DATETIME
 }
 
-class Router {
-  +GET /api/products
-  +POST /api/products
-  +GET /api/products/:id
-  +PUT /api/products/:id
-  +DELETE /api/products/:id
+entity PIZZAS_HAS_INGREDIENTS {
+    * pizza_id : INT <<PK,FK>>
+    * ingredient_id : INT <<PK,FK>>
 }
 
-ProductController -- Product : uses >
-Router --> ProductController : routes to >
+PIZZA ||--o{ PIZZAS_HAS_INGREDIENTS
+INGREDIENT ||--o{ PIZZAS_HAS_INGREDIENTS
 
 @enduml
