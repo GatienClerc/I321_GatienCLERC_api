@@ -1,7 +1,7 @@
-// routes/ingredient.js
+// routes/ingredients.js
 const express = require('express');
 const { body, param } = require('express-validator');
-const ingredientController = require('../controllers/ingredientController');
+const ingredientsController = require('../controllers/ingredientsController');
 
 const router = express.Router();
 
@@ -9,12 +9,12 @@ const router = express.Router();
  * @openapi
  * /api/ingredients:
  *   get:
- *     summary: Retrieve a list of ingredients
+ *     summary: Retrieve a list of product items
  *     responses:
  *       200:
- *         description: A list of ingredients
+ *         description: A list of product items
  *   post:
- *     summary: Create a new ingredient
+ *     summary: Create a new product item
  *     requestBody:
  *       required: true
  *       content:
@@ -31,7 +31,7 @@ const router = express.Router();
  *                 type: number
  *     responses:
  *       201:
- *         description: Ingredient created
+ *         description: Product item created
  *       400:
  *         description: Invalid input
  */
@@ -40,7 +40,7 @@ const router = express.Router();
  * @openapi
  * /api/ingredients/{id}:
  *   get:
- *     summary: Get an ingredient by ID
+ *     summary: Get a product item by ID
  *     parameters:
  *       - in: path
  *         name: id
@@ -49,11 +49,11 @@ const router = express.Router();
  *           type: integer
  *     responses:
  *       200:
- *         description: A single ingredient
+ *         description: A single product item
  *       404:
- *         description: Ingredient not found
+ *         description: Product item not found
  *   put:
- *     summary: Update an ingredient by ID
+ *     summary: Update a product item by ID
  *     parameters:
  *       - in: path
  *         name: id
@@ -69,19 +69,17 @@ const router = express.Router();
  *             properties:
  *               name:
  *                 type: string
- *               description:
- *                 type: string
  *               price:
  *                 type: number
  *     responses:
  *       200:
- *         description: Ingredient updated
+ *         description: Product item updated
  *       400:
  *         description: Invalid input
  *       404:
- *         description: Ingredient not found
+ *         description: Product item not found
  *   delete:
- *     summary: Delete an ingredient by ID
+ *     summary: Delete a product item by ID
  *     parameters:
  *       - in: path
  *         name: id
@@ -90,9 +88,9 @@ const router = express.Router();
  *           type: integer
  *     responses:
  *       204:
- *         description: Ingredient deleted
+ *         description: Product item deleted
  *       404:
- *         description: Ingredient not found
+ *         description: Product item not found
  */
 
 /**
@@ -103,7 +101,6 @@ const createAndUpdateValidations = [
     body('price').isFloat({ gt: 0 }).withMessage('price must be a positive number'),
 ];
 
-router.get('/', ingredientController.findAll);
-router.get('/:id', [param('id').isInt().withMessage('id must be an integer')], ingredientController.findOne);
-
+router.get('/', ingredientsController.findAll);
+router.get('/:id', [param('id').isInt().withMessage('id must be an integer')],ingredientsController.findOne);
 module.exports = router;

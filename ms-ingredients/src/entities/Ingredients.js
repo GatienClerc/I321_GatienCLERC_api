@@ -1,9 +1,9 @@
-// entities/Pizza.js
+// entities/Ingredients.js
 const db = require('../config/database');
 
-class Pizza {
+class Ingredients {
     static findAll() {
-        const sql = `SELECT * FROM pizzas ORDER BY id DESC`;
+        const sql = `SELECT * FROM ingredients ORDER BY id DESC`;
         return new Promise((resolve, reject) => {
             db.all(sql, [], (err, rows) => {
                 if (err) return reject(err);
@@ -13,8 +13,7 @@ class Pizza {
     }
 
     static findById(id) {
-        const sql = ` SELECT * FROM pizzas WHERE id = ? `;
-
+        const sql = `SELECT * FROM ingredients WHERE id = ?`;
         return new Promise((resolve, reject) => {
             db.get(sql, [id], (err, row) => {
                 if (err) return reject(err);
@@ -22,7 +21,6 @@ class Pizza {
             });
         });
     }
-
 }
 
-module.exports = Pizza;
+module.exports = Ingredients;
