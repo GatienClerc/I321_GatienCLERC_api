@@ -23,9 +23,9 @@ const PizzaController = {
     },
 
     // GET /api/pizzas/full
-    async findAllWithItems(req, res) {
+    async findAllWithIngredients(req, res) {
         try {
-            const pizzas = await PizzaService.getAllWithItems();
+            const pizzas = await PizzaService.getAllWithIngredients();
             res.json(pizzas);
         } catch (error) {
             res.status(500).json({ error: error.message });
@@ -34,10 +34,10 @@ const PizzaController = {
 
     // GET /api/pizzas/:id/full
     // Returns pizza + list of items
-    async getPizzaWithItems(req, res) {
+    async getPizzaWithIngredients(req, res) {
         try {
             const { id } = req.params;
-            const pizza = await PizzaService.getPizzaWithItems(id);
+            const pizza = await PizzaService.getPizzaWithIngredients(id);
             res.json(pizza);
         } catch (error) {
             res.status(404).json({ error: error.message });

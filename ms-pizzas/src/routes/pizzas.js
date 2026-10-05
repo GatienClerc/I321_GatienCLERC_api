@@ -205,8 +205,8 @@ const createAndUpdateValidationsCompositions = [
 
 // ---------------- Pizza ----------------
 router.get('/', pizzaController.findAll);
-router.get('/:id/full', [param('id').isInt()], pizzaController.getPizzaWithItems);
-router.get('/full', pizzaController.findAllWithItems);
+router.get('/:id/full', [param('id').isInt()], pizzaController.getPizzaWithIngredients);
+router.get('/full', pizzaController.findAllWithIngredients);
 
 // ---------------- Composition ----------------
 router.get('/:id/compositions',[param('id').isInt()], pizzaController.getCompositions);

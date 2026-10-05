@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS pizzas (
 CREATE TABLE IF NOT EXISTS pizza_compositions (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   pizza_id INTEGER NOT NULL,
-  item_id INTEGER NOT NULL,
+  ingredient_id INTEGER NOT NULL,
   created_at TEXT DEFAULT (datetime('now')),
   updated_at TEXT DEFAULT (datetime('now')),
   FOREIGN KEY (pizza_id) REFERENCES pizzas(id) ON DELETE CASCADE
@@ -85,7 +85,7 @@ db.serialize(() => {
         if (row.count === 0) {
             console.log('Seeding pizza_compositions...');
             const stmt = db.prepare(`
-            INSERT INTO pizza_compositions (pizza_id, item_id)
+            INSERT INTO pizza_compositions (pizza_id, ingredient_id)
             VALUES (?, ?)
         `);
 

@@ -12,47 +12,48 @@ const PizzaService = {
         return PizzaEntity.findById(id);
     },
 
-    async getAllWithItems() {
+    async getAllWithIngredients() {
         const pizzas = await PizzaEntity.findAll();
 
         return Promise.all(
             pizzas.map(async (pizza) => {
                 const compositions = await PizzaEntity.findCompositions(pizza.id);
 
-                const items = await Promise.all(
+                const ingredients = await Promise.all(
                     compositions.map(async (comp) => {
 
-                        const res = await fetch(`${INGREDIENT_SERVICE_URL}/api/ingredients/${comp.item_id}`);
+                        const res = await fetch(`${INGREDIENT_SERVICE_URL}/api/ingredients/${comp.ingredient_id}`);
 
                         if (!res.ok) {
                             return null;
                         }
-                        const itemData = await res.json();
-                        return { ...itemData, quantity: comp.quantity, unit: comp.unit};
+                        const ingredientData = await res.json();
+                        return { ...ingredientData, quantity: comp.quantity, unit: comp.unit};
                     })
                 );
 
-                return { ...pizza, items: items.filter(Boolean)};
+                return { ...pizza, ingredients: ingredients.filter(Boolean)};
+
             })
         );
     },
 
-    async getPizzaWithItems(pizzaId) {
+    async getPizzaWithIngredients(pizzaId) {
         const pizza = await PizzaEntity.findById(pizzaId);
         if (!pizza) throw new Error('Pizza not found');
 
         const compositions = await PizzaEntity.findCompositions(pizzaId);
 
-        const items = await Promise.all(
+        const ingredients = await Promise.all(
             compositions.map(async (comp) => {
-                const res = await fetch(`${INGREDIENT_SERVICE_URL}/api/ingredients/${comp.item_id}`);
-                if (!res.ok) throw new Error(`ingredients ${comp.item_id} not found`);
-                const itemData = await res.json();
-                return { ...itemData, quantity: comp.quantity, unit: comp.unit };
+                const res = await fetch(`${INGREDIENT_SERVICE_URL}/api/ingredients/${comp.ingredient_id}`);
+                if (!res.ok) throw new Error(`ingredients ${comp.ingredient_id} not found`);
+                const ingredientData = await res.json();
+                return { ...ingredientData, quantity: comp.quantity, unit: comp.unit };
             })
         );
 
-        return { ...pizza, items };
+        return { ...pizza, ingredients };
     },
 
     async getCompositions(pizzaId) {
